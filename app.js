@@ -29,18 +29,21 @@ MongoDb.connect(url, (err, client) =>{
 // users login
 
 app.post('/api/login', (req, res) =>{
-    
-    const {name, password} = req.body;
+    const name = req.body.name;
+    const password = req.body.password;
 
-    db.collection('users').findOne({name, password})
+    db.collection.findOne({name, password})
     .then((result) =>{
-
-        jwt.sign({name, password}, 'secret123',
-        (err, token) =>{
-        res.status(200).json({token, user: result})
-    })
+        if(result){
+            jwt.sign({name}, 'seafdsfsa', (err, token) =>{
+                res.status(200).json({token, user: result})
+            })
+        } else {
+            console.log('not found')
+        }
     })
 })
+
 
 // USER REGISTER
 
