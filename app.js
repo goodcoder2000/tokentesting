@@ -29,17 +29,17 @@ MongoDb.connect(url, (err, client) =>{
 // users login
 
 app.post('/api/login', (req, res) =>{
-    const name = req.body.name;
-    const password = req.body.password;
 
-    db.collection.findOne({name, password})
+    const {name, password} = req.body;
+
+    db.collection('users').findOne({name, password})
     .then((result) =>{
         if(result){
-            jwt.sign({name}, 'seafdsfsa', (err, token) =>{
+            jwt.sign({result}, 'seafdsfsa', (err, token) =>{
                 res.status(200).json({token, user: result})
             })
         } else {
-            console.log('not found')
+            res.json({error: "not found"})
         }
     })
 })
