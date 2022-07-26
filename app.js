@@ -37,9 +37,9 @@ app.post('/api/login', (req, res) =>{
 
         jwt.sign({name, password}, 'secret123',
         (err, token) =>{
-        res.status(201).json({token, user: result})
+        res.status(200).json({token, user: result})
     })
-    })    
+    })
 })
 
 // USER REGISTER
