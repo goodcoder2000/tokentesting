@@ -18,9 +18,8 @@ app.use(cors(
 ))
 
 
-let url = "mongodb+srv://goodcoder2000:1082018mgmg@cluster0.puynx.mongodb.net/?retryWrites=true&w=majority";
 let db;
-MongoDb.connect(url, (err, client) =>{
+MongoDb.connect(process.env.url, (err, client) =>{
     if(err) throw err
     db = client.db('tokentesting')
 })
@@ -36,7 +35,7 @@ app.post('/api/login', (req, res) =>{
     .then((result) =>{
         if(result){
             jwt.sign({result}, 'seafdsfsa', (err, token) =>{
-                res.status(200).json({token, user: result})
+                res.status(200).json({token})
             })
         } else {
             res.json({error: "not found"})
