@@ -1,4 +1,5 @@
 require('dotenv').config();
+const cors = require('cors');
 const express = require('express');
 const app = express();
 const jwt = require('jsonwebtoken');
@@ -7,6 +8,14 @@ const MongoDb = require('mongodb').MongoClient;
 
 app.listen(process.env.PORT, () => console.log('server is running', process.env.PORT ))
 app.use(express.json());
+app.use(cors(
+    {
+        "origin": "*",
+        "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+        "preflightContinue": false,
+        "optionsSuccessStatus": 204
+      }
+))
 
 
 let url = "mongodb+srv://goodcoder2000:1082018mgmg@cluster0.puynx.mongodb.net/?retryWrites=true&w=majority";
@@ -26,7 +35,7 @@ app.post('/api/login', (req, res) =>{
     db.collection('users').findOne({name, password})
     .then((result) =>{
 
-        jwt.sign(result, 'secret123',
+        jwt.sign({name, password}, 'secret123',
         (err, token) =>{
         res.status(201).json({token, user: result})
     })
