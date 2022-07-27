@@ -35,7 +35,7 @@ app.post('/api/login', async (req, res) =>{
     .then((result) =>{
         if(result){
             jwt.sign({result}, 'seafdsfsa', (err, token) =>{
-                res.status(200).json(result)
+                res.send(result)
             })
         } else {
             res.json({error: "not found"})
