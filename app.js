@@ -33,13 +33,15 @@ app.post('/api/login', async (req, res) =>{
 
     await db.collection('users').findOne({name, password})
     .then((result) =>{
-        if(result){
-            jwt.sign({result}, 'seafdsfsa', (err, token) =>{
-                res.send(result)
-            })
-        } else {
-            res.json({error: "not found"})
-        }
+
+        res.status(200).json(result)
+        // if(result){
+        //     jwt.sign({result}, 'seafdsfsa', (err, token) =>{
+        //         res.send(result)
+        //     })
+        // } else {
+        //     res.json({error: "not found"})
+        // }
     })
     // const users = {
     //     name: 'mgmg',
